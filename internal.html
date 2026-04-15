@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PTP Reefer Internal Resources</title>
+    <meta name="description" content="Download staff-only resources such as training modules, SOPs, ISO documents and job descriptions.">
+    <meta name="robots" content="noindex, nofollow">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Roboto+Mono:wght@400;500&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900">
+    <!-- simple header -->
+    <nav class="bg-white border-b border-slate-200 p-4">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="bg-slate-900 p-2 rounded">
+                    <i class="fas fa-snowflake text-blue-400 text-2xl"></i>
+                </div>
+                <span class="text-xl font-bold tracking-tight text-slate-900">PTP <span class="text-blue-700">REEFER</span></span>
+            </div>
+            <a href="/logout" class="text-sm text-blue-600 hover:underline">Logout</a>
+        </div>
+    </nav>
+    <main class="max-w-4xl mx-auto py-16 px-4">
+        <h1 class="text-3xl font-bold mb-2">Internal Downloads</h1>
+        <p class="mb-4">Welcome, <span id="userName" class="font-semibold"></span>.</p>
+        <p class="mb-6">Below are the PDF resources available for staff. Click to download.</p>
+        <ul class="space-y-4">
+            <li class="font-semibold mt-4">
+                Training Modules
+                <ul id="trainingList" class="ml-4 mt-2 space-y-2 text-sm text-slate-700 font-normal">
+                    <li class="text-slate-500">Loading training documents...</li>
+                </ul>
+            </li>
+            <li class="font-semibold mt-4">
+                SOPs &amp; Procedures
+                <ul id="procedureList" class="ml-4 mt-2 space-y-2 text-sm text-slate-700 font-normal">
+                    <li class="text-slate-500">Loading SOP documents...</li>
+                </ul>
+            </li>
+            <li class="font-semibold mt-4">
+                ISO Documents
+                <ul id="isoList" class="ml-4 mt-2 space-y-2 text-sm text-slate-700 font-normal">
+                    <li class="text-slate-500">Loading ISO documents...</li>
+                </ul>
+            </li>
+            <li class="font-semibold mt-4">
+                Job Descriptions
+                <ul id="hrList" class="ml-4 mt-2 space-y-2 text-sm text-slate-700 font-normal">
+                    <li class="text-slate-500">Loading HR documents...</li>
+                </ul>
+            </li>
+        </ul>
+    </main>
+    <script>
+        // fetch current user from server
+        fetch('/me').then(r=>r.json()).then(data=>{
+            if(data.user){
+                document.getElementById('userName').textContent = data.user;
+            }
+        });
+
+        const trainingList = document.getElementById('trainingList');
+        const procedureList = document.getElementById('procedureList');
+        const isoList = document.getElementById('isoList');
+        const hrList = document.getElementById('hrList');
+
+        function renderDocs(listEl, docs, emptyMessage) {
+            listEl.innerHTML = '';
+            if (!docs.length) {
+                listEl.innerHTML = `<li class="text-slate-500">${emptyMessage}</li>`;
+                return;
+            }
+
+            docs.forEach((doc) => {
+                const li = document.createElement('li');
+                const link = document.createElement('a');
+                link.href = doc.path;
+                link.className = 'text-blue-600 hover:underline';
+                link.textContent = doc.title;
+                link.target = '_blank';
+                link.rel = 'noopener noreferrer';
+                li.appendChild(link);
+                listEl.appendChild(li);
+            });
+        }
+
+        async function loadCategory(category, listEl, emptyMessage, errorMessage) {
+            try {
+                const response = await fetch(`/api/docs?category=${encodeURIComponent(category)}`);
+                if (!response.ok) {
+                    throw new Error('Unable to load documents');
+                }
+
+                const docs = await response.json();
+                renderDocs(listEl, docs, emptyMessage);
+            } catch (error) {
+                listEl.innerHTML = `<li class="text-red-600">${errorMessage}</li>`;
+            }
+        }
+
+        loadCategory('training', trainingList, 'No training documents available.', 'Failed to load training documents.');
+        loadCategory('procedures', procedureList, 'No SOP/procedure documents available.', 'Failed to load SOP documents.');
+        loadCategory('iso', isoList, 'No ISO documents available.', 'Failed to load ISO documents.');
+        loadCategory('hr', hrList, 'No HR documents available.', 'Failed to load HR documents.');
+    </script>
+    <footer class="bg-white border-t border-slate-200 py-8">
+        <div class="max-w-7xl mx-auto text-center text-xs text-slate-500">
+            © 2026 Port of Tanjung Pelepas. All Rights Reserved.
+        </div>
+    </footer>
+</body>
+</html>

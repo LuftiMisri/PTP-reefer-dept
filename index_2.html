@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PTP Reefer Department | Operational Excellence</title>
+    <!-- SEO meta -->
+    <meta name="description" content="PTP Reefer Department delivers reliable cold chain monitoring and technical support 24/7 at Pelabuhan Tanjung Pelepas.">
+    <meta name="keywords" content="reefer, cold chain operations, PTP, maritime logistics, ISO compliance">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://example.com/">
+    <!-- Open Graph -->
+    <meta property="og:title" content="PTP Reefer Department – Operational Excellence">
+    <meta property="og:description" content="Ensuring operational excellence through 24/7 technical monitoring and regulatory compliance for every reefer unit.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://example.com/">
+    <meta property="og:image" content="" data-image-filename="home-bg.jpg" data-image-category="hero">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Roboto+Mono:wght@400;500&display=swap');
+        
+        :root {
+            --ptp-navy: #0f172a;
+            --ptp-blue: #1e40af;
+            --ptp-accent: #3b82f6;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        .mono {
+            font-family: 'Roboto Mono', monospace;
+        }
+
+        .hero-gradient {
+            background: linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.85));
+            background-size: cover;
+            background-position: center;
+        }
+
+        .hero-title {
+            overflow: hidden;
+        }
+
+        .hero-title .hero-line {
+            display: block;
+            opacity: 0;
+            transform: translateY(34px);
+            filter: blur(6px);
+        }
+
+        .hero-title.is-visible .hero-line {
+            animation: heroLineIn 1.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        .hero-title.is-visible .hero-line:nth-child(2) {
+            animation-delay: 0.4s;
+        }
+
+        .about-main-title {
+            opacity: 0;
+            transform: translateY(22px);
+            filter: blur(3px);
+        }
+
+        .about-main-title.is-visible {
+            animation: aboutTitleIn 1.05s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        @keyframes heroLineIn {
+            from {
+                opacity: 0;
+                transform: translateY(34px);
+                filter: blur(6px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+                filter: blur(0);
+            }
+        }
+
+        @keyframes aboutTitleIn {
+            from {
+                opacity: 0;
+                transform: translateY(22px);
+                filter: blur(3px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+                filter: blur(0);
+            }
+        }
+
+        .team-bg {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.80), rgba(30, 64, 175, 0.75));
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .services-bg {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.82), rgba(30, 64, 175, 0.78));
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .nav-link {
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: var(--ptp-accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .status-dot {
+            height: 8px;
+            width: 8px;
+            background-color: #10b981;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 6px;
+            box-shadow: 0 0 8px #10b981;
+        }
+
+        .profile-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .profile-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .exec-img-container {
+            width: 64px;
+            height: 64px;
+            flex-shrink: 0;
+            border-radius: 9999px;
+            overflow: hidden;
+            border: 2px solid #f1f5f9;
+            box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+        }
+
+        .exec-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .about-split {
+            position: relative;
+            min-height: 220px;
+        }
+
+        .about-card {
+            position: absolute;
+            inset: 0;
+            background: #ffffff;
+            border-radius: 1rem;
+            padding: 1.25rem 1.25rem 1.35rem;
+            box-shadow: 0 18px 40px -28px rgba(15, 23, 42, 0.32);
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(18px) scale(0.985);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .about-card.is-active {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0) scale(1);
+        }
+
+        .about-rotator-dots {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .about-rotator-dot {
+            width: 0.65rem;
+            height: 0.65rem;
+            border-radius: 9999px;
+            border: 0;
+            background: #cbd5e1;
+            transition: all 0.3s ease;
+        }
+
+        .about-rotator-dot.is-active {
+            width: 2rem;
+            background: #1e3a8a;
+        }
+
+        /* PTI hover image card */
+        .pti-card {
+            position: relative;
+            overflow: hidden;
+            min-height: 260px;
+            cursor: default;
+        }
+
+        .pti-card .pti-img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.65s ease;
+        }
+
+        .pti-card:hover .pti-img {
+            transform: scale(1.08);
+        }
+
+        .pti-card .pti-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(15,23,42,0.95) 0%, rgba(15,23,42,0.45) 55%, rgba(15,23,42,0.15) 100%);
+            transition: background 0.4s ease;
+        }
+
+        .pti-card:hover .pti-overlay {
+            background: linear-gradient(to top, rgba(15,23,42,0.97) 0%, rgba(30,64,175,0.55) 60%, rgba(15,23,42,0.25) 100%);
+        }
+
+        .pti-card .pti-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1.25rem;
+        }
+
+        .pti-card .pti-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(30,64,175,0.85);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(96,165,250,0.4);
+            border-radius: 9999px;
+            padding: 0.25rem 0.65rem;
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #bfdbfe;
+            opacity: 0;
+            transform: translateY(-6px);
+            transition: opacity 0.4s ease 0.1s, transform 0.4s ease 0.1s;
+        }
+
+        .pti-card:hover .pti-badge {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .pti-card .pti-desc {
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: max-height 0.45s ease, opacity 0.4s ease;
+        }
+
+        .pti-card:hover .pti-desc {
+            max-height: 6rem;
+            opacity: 1;
+        }
+
+        /* Professional auto‑scroll gallery */
+
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900">
+
+    <!-- Navigation -->
+    <header>
+    <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-md border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex items-center space-x-3">
+                    <div class="bg-slate-900 p-2 rounded">
+                        <i class="fas fa-snowflake text-blue-400 text-2xl"></i>
+                    </div>
+                    <div>
+                        <span class="text-xl font-bold tracking-tight text-slate-900">PTP <span class="text-blue-700">REEFER</span></span>
+                        <p class="text-xs uppercase tracking-widest text-slate-500 font-semibold leading-none">Operations Department</p>
+                    </div>
+                </div>
+                
+                <div class="hidden md:flex space-x-8 text-sm font-medium uppercase tracking-wider">
+                    <a href="#home" class="nav-link text-slate-600 hover:text-slate-900">Home</a>
+                    <a href="#about" class="nav-link text-slate-600 hover:text-slate-900">About</a>
+                    <a href="#leadership" class="nav-link text-slate-600 hover:text-slate-900">Team</a>
+                    <a href="#highlights" class="nav-link text-slate-600 hover:text-slate-900">Capabilities</a>
+                    <a href="#services" class="nav-link text-slate-600 hover:text-slate-900">Services</a>
+                    <a href="#education" class="nav-link text-slate-600 hover:text-slate-900">TVET</a>
+                    <button onclick="toggleModal('login-modal')" class="bg-slate-900 text-white px-5 py-2 rounded text-sm hover:bg-blue-800 transition-colors">
+                        INTERNAL LOGIN
+                    </button>
+                </div>
+
+                <div class="md:hidden">
+                    <button onclick="toggleMobileMenu()" class="text-slate-900 p-2">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-slate-200 p-4 space-y-4 shadow-xl">
+            <a href="#home" class="block py-2 text-slate-600 font-medium">Home</a>
+            <a href="#about" class="block py-2 text-slate-600 font-medium">About</a>
+            <a href="#leadership" class="block py-2 text-slate-600 font-medium">Team</a>
+            <a href="#highlights" class="block py-2 text-slate-600 font-medium">Capabilities</a>
+            <a href="#services" class="block py-2 text-slate-600 font-medium">Services</a>
+            <a href="#education" class="block py-2 text-slate-600 font-medium">TVET</a>
+            <button onclick="toggleModal('login-modal')" class="w-full bg-slate-900 text-white py-3 rounded font-bold">INTERNAL LOGIN</button>
+        </div>
+    </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" aria-label="Home" class="hero-gradient min-h-screen flex items-center pt-20" data-bg-image-filename="home-bg.jpg" data-bg-image-category="hero" data-bg-overlay="linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.85))">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+            <div class="max-w-3xl">
+                <div class="inline-flex items-center space-x-2 bg-blue-500/20 border border-blue-400/30 px-3 py-1 rounded-full mb-6">
+                    <span class="status-dot"></span>
+                    <span class="text-blue-100 text-xs uppercase font-bold tracking-widest">System Status: Optimal</span>
+                </div>
+                <h1 id="hero-title" class="hero-title text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
+                    <span class="hero-line">Powering Reliable</span>
+                    <span class="hero-line text-blue-400">Cold Chain Operations</span>
+                </h1>
+                <p class="text-lg md:text-xl text-slate-300 mb-10 leading-relaxed border-l-4 border-blue-600 pl-6">
+                    Ensuring operational excellence through 24/7 technical monitoring, 
+                    unmatched reliability, and strict regulatory compliance for every reefer unit at Pelabuhan Tanjung Pelepas.
+                </p>
+                <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                    <a href="#highlights" class="bg-blue-600 text-white px-8 py-4 rounded font-bold text-center hover:bg-blue-700 transition-all shadow-lg uppercase tracking-wider text-sm">
+                        View Capabilities
+                    </a>
+                    <a href="#education" class="bg-white/10 text-white border border-white/20 px-8 py-4 rounded font-bold text-center backdrop-blur hover:bg-white/20 transition-all uppercase tracking-wider text-sm">
+                        TVET & Careers
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" aria-label="About" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div>
+                    <h2 class="text-xs font-bold text-blue-600 uppercase tracking-[0.3em] mb-4">Operational Mission</h2>
+                    <h3 id="about-main-title" class="about-main-title text-5xl font-bold text-slate-900 mb-6">Safeguarding Global Cargo Integrity</h3>
+                    <div id="about-rotator" class="about-split mb-4">
+                        <article class="about-card is-active">
+                            <p class="text-xs font-bold uppercase tracking-[0.2em] text-blue-700 mb-2">Operational Backbone</p>
+                            <p class="text-base md:text-lg text-slate-600 leading-relaxed">
+                                The PTP Reefer Department is the operational backbone for temperature-sensitive cargo, protecting product quality from vessel discharge to final yard movement. We combine disciplined execution with engineering precision to ensure every reefer container remains within required temperature parameters.
+                            </p>
+                        </article>
+                        <article class="about-card">
+                            <p class="text-xs font-bold uppercase tracking-[0.2em] text-blue-700 mb-2">Performance Assurance</p>
+                            <p class="text-base md:text-lg text-slate-600 leading-relaxed">
+                                Our performance is driven by reliability, efficiency, and unwavering cold chain integrity. Through close teamwork, strong technical expertise, and real-time monitoring capabilities, we deliver consistent service continuity for shipping lines, cargo owners, and terminal stakeholders.
+                            </p>
+                        </article>
+                    </div>
+                    <div id="about-rotator-dots" class="about-rotator-dots" aria-label="About section highlights"></div>
+                </div>
+                <div class="relative">
+                    <div class="aspect-square bg-slate-100 rounded-2xl overflow-hidden shadow-2xl">
+                        <!-- slideshow container: cycles through same images as gallery -->
+                        <img id="about-display-img" alt="Operational Excellence" class="w-full h-full object-cover transition-opacity duration-700">
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-16 bg-slate-900 rounded-2xl border border-slate-800 p-6 sm:p-8">
+                <div class="flex items-center justify-between mb-5">
+                    <div>
+                        <h4 class="text-xs font-bold text-blue-300 uppercase tracking-[0.3em] mb-2">Our Operations at a Glance</h4>
+                        <p class="text-sm text-slate-300">Data-backed indicators that reflect the scale and reliability of our reefer operations.</p>
+                    </div>
+                    <div class="hidden sm:flex items-center gap-2">
+                        <button id="kpiPrev" type="button" class="h-9 w-9 rounded-full border border-slate-500 text-slate-100 hover:bg-slate-800" aria-label="Previous KPI slide">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button id="kpiNext" type="button" class="h-9 w-9 rounded-full border border-slate-500 text-slate-100 hover:bg-slate-800" aria-label="Next KPI slide">
+                            <i class="fas fa-chevron    -right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="relative overflow-hidden">
+                    <div id="kpiTrack" class="flex transition-transform duration-500 ease-out">
+                        <article class="min-w-full">
+                            <div class="bg-white rounded-xl p-6 border border-slate-200">
+                                <p class="text-xs font-bold uppercase tracking-[0.2em] text-blue-700 mb-2">Total Reefer Points</p>
+                                <p class="text-4xl font-bold text-slate-900">5,000+</p>
+                                <p class="text-slate-600 mt-2">Power plugs strategically distributed to support high vessel and yard throughput.</p>
+                            </div>
+                        </article>
+                        <article class="min-w-full">
+                            <div class="bg-white rounded-xl p-6 border border-slate-200">
+                                <p class="text-xs font-bold uppercase tracking-[0.2em] text-blue-700 mb-2">Monitoring Frequency</p>
+                                <p class="text-4xl font-bold text-slate-900">24/7</p>
+                                <p class="text-slate-600 mt-2">Real-time tracking and exception management to protect temperature integrity at all times.</p>
+                            </div>
+                        </article>
+                        <article class="min-w-full">
+                            <div class="bg-white rounded-xl p-6 border border-slate-200">
+                                <p class="text-xs font-bold uppercase tracking-[0.2em] text-blue-700 mb-2">Annual Volume</p>
+                                <p class="text-4xl font-bold text-slate-900">1M+</p>
+                                <p class="text-slate-600 mt-2">TEUs handled through coordinated planning, disciplined execution, and operational consistency.</p>
+                            </div>
+                        </article>
+                        <article class="min-w-full">
+                            <div class="bg-white rounded-xl p-6 border border-slate-200">
+                                <p class="text-xs font-bold uppercase tracking-[0.2em] text-blue-700 mb-2">Technical Team</p>
+                                <p class="text-4xl font-bold text-slate-900">50+</p>
+                                <p class="text-slate-600 mt-2">Certified technicians delivering fast intervention, preventive checks, and continuous support.</p>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+
+                <div id="kpiDots" class="mt-5 flex items-center justify-center gap-2" aria-label="KPI slide indicators"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Leadership & Operations Team Section -->
+    <section id="leadership" aria-label="Leadership and Team" class="py-24 team-bg border-y border-slate-200" data-bg-image-filename="reefer_background_1.png" data-bg-image-category="operations" data-bg-overlay="linear-gradient(135deg, rgba(15, 23, 42, 0.80), rgba(30, 64, 175, 0.75))">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-xs font-bold text-blue-300 uppercase tracking-[0.3em] mb-4">Department Management</h2>
+                <h3 class="text-5xl font-bold text-white">Leadership & Operations Team</h3>
+                <p class="mt-4 text-base md:text-lg text-slate-200 max-w-2xl mx-auto">Overseeing technical precision and operational flow at the region's premier cold chain terminal facility.</p>
+            </div>
+
+            <!-- Management Row -->
+            <div id="managementGrid" class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16"></div>
+
+            <!-- Duty Executives Grid -->
+            <div class="border-t border-slate-200 pt-12">
+                <h5 class="text-xs font-bold uppercase text-white tracking-[0.2em] mb-8 text-center">Duty Executives & Operational Response</h5>
+                <div id="execGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Highlights Section -->
+    <section id="highlights" aria-label="Core Competencies" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-xs font-bold text-blue-600 uppercase tracking-[0.3em] mb-4">Core Competencies</h2>
+                <h3 class="text-5xl font-bold text-slate-900">Why PTP Reefer Stands Apart</h3>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="pti-card rounded-lg shadow-lg">
+                    <img id="iso-compliance-img" alt="ISO Compliance" class="pti-img" data-image-filename="carry out monitoring.png" data-image-category="operations">
+                    <div class="pti-overlay"></div>
+                    <span class="pti-badge">ISO Compliance</span>
+                    <div class="pti-content">
+                        <div class="flex items-center gap-2 mb-2">
+                            <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-file-contract text-white text-sm"></i>
+                            </div>
+                            <h4 class="font-bold text-white text-base leading-tight">ISO Compliance</h4>
+                        </div>
+                        <p class="pti-desc text-slate-300 text-sm leading-relaxed">Strict adherence to international standards and thorough transit documentation.</p>
+                    </div>
+                </div>
+                <div class="pti-card rounded-lg shadow-lg">
+                    <video autoplay muted loop playsinline class="pti-img">
+                        <source src="https://www.pexels.com/download/video/3075999/" type="video/mp4">
+                    </video>
+                    <div class="pti-overlay"></div>
+                    <span class="pti-badge">Global Expertise</span>
+                    <div class="pti-content">
+                        <div class="flex items-center gap-2 mb-2">
+                            <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-globe text-white text-sm"></i>
+                            </div>
+                            <h4 class="font-bold text-white text-base leading-tight">Global Expertise</h4>
+                        </div>
+                        <p class="pti-desc text-slate-300 text-sm leading-relaxed">30+ years of expertise in reefer operations across major ports worldwide.</p>
+                    </div>
+                </div>
+                <div class="pti-card rounded-lg shadow-lg">
+                    <img id="digital-monitor-img" alt="Digital Monitoring" class="pti-img" data-image-filename="reefer_monitor.png" data-image-category="operations">
+                    <div class="pti-overlay"></div>
+                    <span class="pti-badge">Digital Monitoring</span>
+                    <div class="pti-content">
+                        <div class="flex items-center gap-2 mb-2">
+                            <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-laptop-code text-white text-sm"></i>
+                            </div>
+                            <h4 class="font-bold text-white text-base leading-tight">Digital Monitoring</h4>
+                        </div>
+                        <p class="pti-desc text-slate-300 text-sm leading-relaxed">Navis N4–integrated system enabling paperless workflows, seamless data flow, and live reefer status updates.</p>
+                    </div>
+                </div>
+                <div class="pti-card rounded-lg shadow-lg">
+                    <img id="live-dashboard-img" alt="Live-Monitoring Dashboards" class="pti-img" data-image-filename="dashboard.png" data-image-category="operations">
+                    <div class="pti-overlay"></div>
+                    <span class="pti-badge">Dashboards</span>
+                    <div class="pti-content">
+                        <div class="flex items-center gap-2 mb-2">
+                            <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-chart-line text-white text-sm"></i>
+                            </div>
+                            <h4 class="font-bold text-white text-base leading-tight">Live-Monitoring Dashboards</h4>
+                        </div>
+                        <p class="pti-desc text-slate-300 text-sm leading-relaxed">Real-time system dashboards for instant visibility and analytics.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" aria-label="Services" class="py-24 services-bg" data-bg-image-filename="reeferblock_1.png" data-bg-image-category="operations" data-bg-overlay="linear-gradient(135deg, rgba(15, 23, 42, 0.82), rgba(30, 64, 175, 0.78))">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-xs font-bold text-blue-300 uppercase tracking-[0.3em] mb-4">Our Services</h2>
+                <h3 class="text-5xl font-bold text-white">Comprehensive Reefer Solutions</h3>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+                <div class="pti-card rounded-lg shadow-lg">
+                    <img alt="Technician performing Pre-Trip Inspection" class="pti-img" data-image-filename="ptp-reeferstack.jpg" data-image-category="operations">
+                    <div class="pti-overlay"></div>
+                    <span class="pti-badge">On-site Inspection</span>
+                    <div class="pti-content">
+                        <div class="flex items-center gap-2 mb-2">
+                            <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-clipboard-check text-white text-sm"></i>
+                            </div>
+                            <h4 class="font-bold text-white text-base leading-tight">Pre-Trip Inspection (PTI)</h4>
+                        </div>
+                        <p class="pti-desc text-slate-300 text-sm leading-relaxed">Thorough pre-departure inspections ensuring reefer readiness and compliance.</p>
+                    </div>
+                </div>
+                <div class="pti-card rounded-lg shadow-lg">
+                    <img alt="Reefer Plugging and Handling" class="pti-img" data-image-filename="terminal.jpg" data-image-category="gallery">
+                    <div class="pti-overlay"></div>
+                    <span class="pti-badge">Yard Operations</span>
+                    <div class="pti-content">
+                        <div class="flex items-center gap-2 mb-2">
+                            <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-plug text-white text-sm"></i>
+                            </div>
+                            <h4 class="font-bold text-white text-base leading-tight">Reefer Plugging & Handling</h4>
+                        </div>
+                        <p class="pti-desc text-slate-300 text-sm leading-relaxed">Expert plugging, unplugging, and safe handling of refrigerated containers.</p>
+                    </div>
+                </div>
+                <div class="pti-card rounded-lg shadow-lg">
+                    <img alt="24/7 Reefer Monitoring" class="pti-img" data-image-filename="ptp-prime.jpg" data-image-category="operations">
+                    <div class="pti-overlay"></div>
+                    <span class="pti-badge">Live Surveillance</span>
+                    <div class="pti-content">
+                        <div class="flex items-center gap-2 mb-2">
+                            <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-satellite text-white text-sm"></i>
+                            </div>
+                            <h4 class="font-bold text-white text-base leading-tight">24/7 Reefer Monitoring</h4>
+                        </div>
+                        <p class="pti-desc text-slate-300 text-sm leading-relaxed">Real-time continuous surveillance of all reefer units around the clock.</p>
+                    </div>
+                </div>  
+                <div class="pti-card rounded-lg shadow-lg">
+                    <img alt="Alarm Response and Support" class="pti-img" data-image-filename="terminal_1.jpg" data-image-category="gallery">
+                    <div class="pti-overlay"></div>
+                    <span class="pti-badge">Rapid Response</span>
+                    <div class="pti-content">
+                        <div class="flex items-center gap-2 mb-2">
+                            <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-bell text-white text-sm"></i>
+                            </div>
+                            <h4 class="font-bold text-white text-base leading-tight">Alarm Response & Support</h4>
+                        </div>
+                        <p class="pti-desc text-slate-300 text-sm leading-relaxed">Rapid alarm response and 24/7 technical support for any emergencies.</p>
+                    </div>
+                </div>
+                <div class="pti-card rounded-lg shadow-lg">
+                    <img alt="Reporting and Documentation" class="pti-img" data-image-filename="aerial.jpg" data-image-category="gallery">
+                    <div class="pti-overlay"></div>
+                    <span class="pti-badge">Documentation</span>
+                    <div class="pti-content">
+                        <div class="flex items-center gap-2 mb-2">
+                            <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-file-lines text-white text-sm"></i>
+                            </div>
+                            <h4 class="font-bold text-white text-base leading-tight">Reporting & Documentation</h4>
+                        </div>
+                        <p class="pti-desc text-slate-300 text-sm leading-relaxed">Comprehensive reports and digital documentation for all operations.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TVET & Education Section -->
+    <section id="education" aria-label="Education and TVET" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-16">
+                <h2 class="text-xs font-bold text-blue-600 uppercase tracking-[0.3em] mb-4">Talent Development</h2>
+                <h3 class="text-5xl font-bold text-slate-900">TVET & Professional Education</h3>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+                <div class="bg-white p-8 rounded-xl border border-slate-200">
+                    <h4 class="text-lg font-bold text-slate-900 mb-6 flex items-center"><i class="fas fa-microchip text-blue-600 mr-3"></i> Reefer Tech</h4>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-6">Reefers combine thermodynamics and IoT telemetry. We utilize state-of-the-art tools to manage these mobile warehouses.</p>
+                </div>
+                <div class="bg-slate-900 p-8 rounded-xl text-white">
+                    <h4 class="text-lg font-bold mb-6 flex items-center"><i class="fas fa-map-signs text-blue-400 mr-3"></i> Career Path</h4>
+                    <p class="text-sm text-slate-400">Join the region's leading cold chain team as a Technician, Planner, or Operations Executive.</p>
+                    <button class="w-full mt-10 border border-white/20 py-3 rounded text-sm font-bold hover:bg-white/5 uppercase tracking-widest">View Vacancies</button>
+                </div>
+                <div class="bg-blue-600 p-8 rounded-xl text-white">
+                    <h4 class="text-lg font-bold mb-6 flex items-center"><i class="fas fa-graduation-cap text-white mr-3"></i> Training</h4>
+                    <p class="text-sm text-blue-100 mb-6">PTP offers structured internships for TVET students in Mechanical and Electrical Engineering.</p>
+                    <a href="#" class="inline-block w-full text-center bg-white text-blue-600 py-3 rounded text-sm font-bold uppercase tracking-widest">Apply Now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center md:text-left">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+                <div class="col-span-1 md:col-span-1">
+                    <div class="flex items-center justify-center md:justify-start space-x-3 mb-6">
+                        <div class="bg-slate-900 p-2 rounded"><i class="fas fa-snowflake text-blue-400 text-xl"></i></div>
+                        <span class="text-base font-bold tracking-tight text-slate-900 uppercase">PTP <span class="text-blue-700">Reefer</span></span>
+                    </div>
+                    <p class="text-slate-500 text-sm leading-relaxed">Safeguarding the global cold chain through technical excellence.</p>
+                </div>
+                <div>
+                    <h6 class="font-bold text-slate-900 mb-6 uppercase text-xs tracking-widest">Navigation</h6>
+                    <ul class="space-y-4 text-sm text-slate-600">
+                        <li><a href="#home" class="hover:text-blue-600">Home</a></li>
+                        <li><a href="#leadership" class="hover:text-blue-600">Our Team</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h6 class="font-bold text-slate-900 mb-6 uppercase text-xs tracking-widest">Stakeholders</h6>
+                    <ul class="space-y-4 text-sm text-slate-600">
+                        <li><a href="#" class="hover:text-blue-600">Shipping Lines</a></li>
+                        <li><a href="#" class="hover:text-blue-600">Terminal Planning</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h6 class="font-bold text-slate-900 mb-6 uppercase text-xs tracking-widest">Support</h6>
+                    <p class="text-sm font-bold text-slate-900 mono">+60 7 504 2222</p>
+                    <p class="text-sm text-blue-600 font-medium">ReeferSupervisor@ptp.com.my</p>
+                </div>
+            </div>
+            <div class="mt-16 pt-8 border-t border-slate-100 text-center text-xs text-slate-500">
+                <p>© 2024 Port of Tanjung Pelepas. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="hidden fixed inset-0 z-[60] flex items-center justify-center p-4">
+        <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" onclick="toggleModal('login-modal')"></div>
+        <div class="bg-white rounded-lg shadow-2xl w-full max-w-md relative z-10 p-8">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold text-slate-900">Internal Access</h3>
+                <button onclick="toggleModal('login-modal')" class="text-slate-400 hover:text-slate-600"><i class="fas fa-times"></i></button>
+            </div>
+            <form id="login-form" method="POST" action="/login" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold uppercase text-slate-400 mb-2">Staff ID</label>
+                    <input name="id" id="login-id" type="text" class="w-full bg-slate-50 border border-slate-200 rounded p-3 text-sm focus:border-blue-500 focus:outline-none" required>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold uppercase text-slate-400 mb-2">Password</label>
+                    <input name="pass" id="login-pass" type="password" class="w-full bg-slate-50 border border-slate-200 rounded p-3 text-sm focus:border-blue-500 focus:outline-none" required>
+                </div>
+                <button type="submit" class="w-full bg-slate-900 text-white py-3 rounded font-bold uppercase tracking-widest text-sm hover:bg-blue-800">Login</button>
+            </form>
+            <!-- show error message if login failed -->
+            <p id="login-error" class="text-red-600 text-sm mt-2 hidden">Invalid credentials, please try again.</p>
+        </div>
+    </div>
+
+    <script src="api.js"></script>
+    <script src="ui.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
