@@ -100,24 +100,39 @@ app.use(session({
     cookie: { maxAge: 2 * 60 * 60 * 1000 } // 2 hours
 }));
 
-const isoUploadDir = path.join(__dirname, 'DOCS', 'ISO DOCS');
+const reeferRootDir = path.join(__dirname, 'reefer');
+const reeferWebsiteDir = path.join(reeferRootDir, 'reefer-website');
+const reeferDocsDir = path.join(reeferRootDir, 'docs');
+const reeferLoginPagePath = path.join(reeferRootDir, 'login-page', 'index.html');
+const isoUploadDir = path.join(reeferDocsDir, 'ISO DOCS');
 
 // authentication check for protected paths
 app.use((req, res, next) => {
+    const requestPath = req.path.toLowerCase();
     // protect internal.html and any files under /docs
-    if ((req.path === '/internal.html' || req.path.startsWith('/docs')) && !req.session.authenticated) {
+    if ((requestPath === '/internal.html' || requestPath.startsWith('/docs')) && !req.session.authenticated) {
         return res.redirect('/?error=invalid');
     }
     next();
 });
 
-// serve static files from current directory
-app.use(express.static(path.join(__dirname)));
+// serve static frontend assets from reefer structure
+app.use('/reefer', express.static(reeferRootDir));
+app.use('/js', express.static(path.join(reeferWebsiteDir, 'js')));
+app.use('/css', express.static(path.join(reeferWebsiteDir, 'css')));
+app.use('/assets', express.static(path.join(reeferWebsiteDir, 'assets')));
+app.use('/IMG', express.static(path.join(reeferWebsiteDir, 'assets', 'images')));
 app.use('/docs/iso', express.static(isoUploadDir));
+app.use('/docs', express.static(reeferDocsDir));
 
-// serve index_2.html as the root page
+// serve public website as the root page
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index_2.html'));
+    res.sendFile(path.join(reeferWebsiteDir, 'index.html'));
+});
+
+// keep legacy internal route path unchanged
+app.get('/internal.html', (req, res) => {
+    res.sendFile(reeferLoginPagePath);
 });
 
 app.post('/login', async (req, res) => {
