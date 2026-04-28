@@ -19,6 +19,13 @@ const dbConfig = {
 
 const pool = mysql.createPool(dbConfig);
 
+const appRootDir = path.join(__dirname, '..');
+const frontendDir = path.join(appRootDir, 'frontend');
+const publicSiteDir = path.join(frontendDir, 'public-site');
+const loginPageDir = path.join(frontendDir, 'login-page');
+const docsDir = path.join(appRootDir, 'docs');
+const isoUploadDir = path.join(docsDir, 'ISO');
+
 function normalizeStoredPath(rawPath) {
     if (typeof rawPath !== 'string') return rawPath;
 
@@ -100,11 +107,7 @@ app.use(session({
     cookie: { maxAge: 2 * 60 * 60 * 1000 } // 2 hours
 }));
 
-const reeferRootDir = path.join(__dirname, 'reefer');
-const reeferWebsiteDir = path.join(reeferRootDir, 'reefer-website');
-const reeferDocsDir = path.join(reeferRootDir, 'docs');
-const reeferLoginPagePath = path.join(reeferRootDir, 'login-page', 'index.html');
-const isoUploadDir = path.join(reeferDocsDir, 'ISO DOCS');
+const reeferLoginPagePath = path.join(loginPageDir, 'index.html');
 
 // authentication check for protected paths
 app.use((req, res, next) => {
@@ -117,17 +120,18 @@ app.use((req, res, next) => {
 });
 
 // serve static frontend assets from reefer structure
-app.use('/reefer', express.static(reeferRootDir));
-app.use('/js', express.static(path.join(reeferWebsiteDir, 'js')));
-app.use('/css', express.static(path.join(reeferWebsiteDir, 'css')));
-app.use('/assets', express.static(path.join(reeferWebsiteDir, 'assets')));
-app.use('/IMG', express.static(path.join(reeferWebsiteDir, 'assets', 'images')));
+app.use('/reefer', express.static(frontendDir));
+app.use('/login-page', express.static(loginPageDir));
+app.use('/js', express.static(path.join(publicSiteDir, 'js')));
+app.use('/css', express.static(path.join(publicSiteDir, 'css')));
+app.use('/assets', express.static(path.join(publicSiteDir, 'assets')));
+app.use('/IMG', express.static(path.join(publicSiteDir, 'assets', 'images')));
 app.use('/docs/iso', express.static(isoUploadDir));
-app.use('/docs', express.static(reeferDocsDir));
+app.use('/docs', express.static(docsDir));
 
 // serve public website as the root page
 app.get('/', (req, res) => {
-    res.sendFile(path.join(reeferWebsiteDir, 'index.html'));
+    res.sendFile(path.join(publicSiteDir, 'index.html'));
 });
 
 // keep legacy internal route path unchanged
