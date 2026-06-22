@@ -1,0 +1,16 @@
+module.exports = [
+  'Bride',
+  'Groom',
+  'Pakaian',
+  'Venue & Deco',
+  'Makanan',
+  'Hantaran',
+  'Penginapan',
+  'Photo & Video',
+  'Emcee & Music',
+  'Honeymoon',
+  'Doorgift',
+  'Extra 1',
+  'Extra 2',
+  'Extra 3',
+];

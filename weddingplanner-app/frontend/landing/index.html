@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ever After — Plan Your Dream Wedding</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Playfair Display', 'serif'],
+            sans: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            blush: {
+              50: '#fdf2f4',
+              100: '#fbe6ea',
+              200: '#f6c9d3',
+              300: '#efa3b3',
+            },
+            gold: {
+              400: '#d9a857',
+              500: '#c8943f',
+              600: '#a87530',
+            },
+          },
+        },
+      },
+    };
+  </script>
+</head>
+<body class="font-sans bg-blush-50 text-gray-800">
+
+  <!-- Nav -->
+  <header class="border-b border-blush-200 bg-white/80 backdrop-blur sticky top-0 z-10">
+    <nav class="max-w-6xl mx-auto flex items-center justify-between px-4 sm:px-6 py-3">
+      <a href="#" class="flex items-center gap-2">
+        <span class="text-2xl">💍</span>
+        <span class="font-display text-xl font-700 text-gray-900">Ever After</span>
+      </a>
+
+      <div class="hidden md:flex items-center gap-6 text-sm font-medium text-gray-600">
+        <a href="#features" class="hover:text-gold-600">Features</a>
+        <a href="#pricing" class="hover:text-gold-600">Pricing</a>
+        <a href="#" class="hover:text-gold-600">Docs</a>
+        <a href="#" class="hover:text-gold-600">Community</a>
+        <a href="#" class="hover:text-gold-600">More</a>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <button class="hidden sm:inline-flex p-2 rounded-md hover:bg-blush-100 text-gray-500" aria-label="Search">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35m1.35-5.65a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        </button>
+        <button class="hidden sm:inline-flex p-2 rounded-md hover:bg-blush-100 text-gray-500" aria-label="Help">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9.09 9a3 3 0 115.82 1c0 2-3 2-3 4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </button>
+        <a href="/auth/" class="bg-gold-500 hover:bg-gold-600 text-white text-sm font-semibold px-4 py-2 rounded-md transition">Get Started — Free</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section class="max-w-3xl mx-auto text-center px-4 sm:px-6 pt-16 pb-10">
+    <div class="flex items-center justify-center gap-2 mb-4">
+      <span class="text-4xl">💍</span>
+      <span class="font-display text-3xl font-700 text-gray-900">Ever After</span>
+    </div>
+    <h1 class="font-display text-3xl sm:text-4xl font-700 text-gray-900 leading-snug">
+      We're building every tool you need to plan your dream wedding.
+    </h1>
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-3 mt-8">
+      <a href="/auth/" class="bg-gold-500 hover:bg-gold-600 text-white font-semibold px-6 py-3 rounded-md w-full sm:w-auto text-center transition">Get Started — Free</a>
+      <a href="#" class="border border-gray-300 hover:border-gold-400 text-gray-800 font-semibold px-6 py-3 rounded-md w-full sm:w-auto text-center transition">See How It Works</a>
+    </div>
+    <p class="mt-6 text-gray-500">
+      Questions? <a href="#" class="underline font-medium text-gray-700 hover:text-gold-600">Watch a demo</a> or <a href="#" class="underline font-medium text-gray-700 hover:text-gold-600">talk to a planner</a>.
+    </p>
+  </section>
+
+  <!-- Explore section -->
+  <section id="features" class="max-w-6xl mx-auto px-4 sm:px-6 pb-20">
+    <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between mb-6">
+      <h2 class="font-display text-2xl font-700 text-gray-900">
+        Explore tools <span class="text-gray-400 font-sans font-normal text-lg">by wedding stage</span>
+      </h2>
+      <a href="#" class="text-sm font-semibold text-gold-600 hover:text-gold-700 mt-2 sm:mt-0">Browse all tools (12) →</a>
+    </div>
+
+    <!-- Tabs -->
+    <div class="inline-flex bg-blush-100 rounded-lg p-1 mb-6">
+      <button class="px-4 py-2 rounded-md text-sm font-medium text-gray-500 hover:text-gray-800">Just Engaged</button>
+      <button class="px-4 py-2 rounded-md text-sm font-semibold bg-white shadow text-gray-900">Mid Planning</button>
+      <button class="px-4 py-2 rounded-md text-sm font-medium text-gray-500 hover:text-gray-800">Final Countdown</button>
+    </div>
+
+    <div class="flex flex-col md:flex-row gap-6">
+      <!-- Sidebar list -->
+      <ul class="md:w-64 flex-shrink-0 space-y-1">
+        <li>
+          <button class="w-full flex items-center gap-2 text-left px-3 py-2 rounded-md bg-white border border-gold-400 font-semibold text-gray-900">
+            <span>💰</span> Budget Tracker
+          </button>
+        </li>
+        <li><button class="w-full flex items-center gap-2 text-left px-3 py-2 rounded-md hover:bg-blush-100 text-gray-600"><span>✅</span> Checklist &amp; Tasks</button></li>
+        <li><button class="w-full flex items-center gap-2 text-left px-3 py-2 rounded-md hover:bg-blush-100 text-gray-600"><span>👰</span> Guest List</button></li>
+        <li><button class="w-full flex items-center gap-2 text-left px-3 py-2 rounded-md hover:bg-blush-100 text-gray-600"><span>🏛️</span> Venue &amp; Deco</button></li>
+        <li><button class="w-full flex items-center gap-2 text-left px-3 py-2 rounded-md hover:bg-blush-100 text-gray-600"><span>🍽️</span> Makanan (Catering)</button></li>
+        <li><button class="w-full flex items-center gap-2 text-left px-3 py-2 rounded-md hover:bg-blush-100 text-gray-600"><span>🎁</span> Hantaran &amp; Doorgift</button></li>
+        <li><button class="w-full flex items-center gap-2 text-left px-3 py-2 rounded-md hover:bg-blush-100 text-gray-600"><span>📸</span> Photo &amp; Video</button></li>
+        <li><button class="w-full flex items-center gap-2 text-left px-3 py-2 rounded-md hover:bg-blush-100 text-gray-600"><span>✈️</span> Honeymoon Planner</button></li>
+      </ul>
+
+      <!-- Feature card -->
+      <div class="flex-1 bg-gold-500 rounded-xl overflow-hidden">
+        <div class="p-6 sm:p-8 flex items-center justify-between gap-4">
+          <div>
+            <div class="flex items-center gap-2 text-white font-semibold text-lg">
+              <span>💰</span> Budget Tracker
+            </div>
+            <p class="text-white/90 mt-1 max-w-md">Track every ringgit — see what's budgeted, paid, and pending at a glance.</p>
+          </div>
+          <a href="#" class="bg-white text-gray-900 font-semibold text-sm px-4 py-2 rounded-md whitespace-nowrap hover:bg-blush-50 transition">Explore</a>
+        </div>
+        <img src="https://placehold.co/900x420/fdf2f4/c8943f?text=Budget+Tracker+Preview" alt="Budget tracker preview" class="w-full" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-blush-200 py-8">
+    <p class="text-center text-sm text-gray-400">© 2026 Ever After. Made with 💕 for couples planning their big day.</p>
+  </footer>
+
+</body>
+</html>

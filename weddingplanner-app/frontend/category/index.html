@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ever After — Category</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { display: ['Playfair Display', 'serif'], sans: ['Inter', 'sans-serif'] },
+          colors: {
+            blush: { 50: '#fdf2f4', 100: '#fbe6ea', 200: '#f6c9d3', 300: '#efa3b3' },
+            gold: { 400: '#d9a857', 500: '#c8943f', 600: '#a87530' },
+          },
+        },
+      },
+    };
+  </script>
+  <script src="/shared/app.js"></script>
+  <style>
+    .no-spinner::-webkit-outer-spin-button,
+    .no-spinner::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    .no-spinner { -moz-appearance: textfield; }
+  </style>
+</head>
+<body class="font-sans bg-blush-50 text-gray-800 min-h-screen flex flex-col">
+
+  <header class="border-b border-blush-200 bg-white/80 backdrop-blur sticky top-0 z-30">
+    <nav class="flex items-center justify-between px-4 sm:px-6 py-3">
+      <div class="flex items-center gap-3">
+        <button id="sidebar-toggle" class="p-2 rounded-md hover:bg-blush-100 text-gray-600" aria-label="Toggle categories">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+        <a href="/dashboard/" class="flex items-center gap-2">
+          <span class="text-2xl">💍</span>
+          <span class="font-display text-xl font-700 text-gray-900">Ever After</span>
+        </a>
+      </div>
+      <div class="flex items-center gap-3">
+        <button id="music-toggle" class="p-2 rounded-md hover:bg-blush-100 text-lg" title="Play background music">🔇</button>
+        <a href="/dashboard/" class="text-sm font-semibold text-gray-600 hover:text-gold-600">← Dashboard</a>
+      </div>
+    </nav>
+  </header>
+
+  <audio id="bg-music" src="/shared/audio/bergema-selamanya.mp3" preload="none"></audio>
+
+  <div class="flex-1 flex relative">
+
+    <!-- Backdrop for mobile when sidebar is open -->
+    <div id="sidebar-backdrop" class="hidden fixed inset-0 bg-black/30 z-20"></div>
+
+    <!-- Sidebar -->
+    <aside id="sidebar" class="fixed sm:static top-[57px] sm:top-0 left-0 h-[calc(100vh-57px)] sm:h-auto bg-white border-r border-blush-200 z-20 overflow-y-auto flex-shrink-0 transition-all duration-200 -translate-x-full w-64">
+      <p class="px-4 pt-4 pb-2 text-xs uppercase tracking-wide text-gray-400">Categories</p>
+      <nav id="sidebar-categories" class="px-2 pb-4 space-y-1"></nav>
+    </aside>
+
+    <main class="flex-1 w-full px-4 sm:px-6 py-10 max-w-5xl mx-auto">
+      <div class="flex items-center gap-2 mb-2">
+        <input id="category-name-input" class="font-display text-2xl font-700 text-gray-900 bg-transparent border-b-2 border-transparent hover:border-blush-200 focus:border-gold-400 focus:outline-none px-1 -ml-1" />
+        <span id="rename-saved" class="hidden text-xs text-green-600">Saved ✓</span>
+      </div>
+      <div class="bg-white border border-blush-200 rounded-xl p-4 mb-6 hover:shadow-sm transition-shadow">
+        <div class="flex items-center justify-between text-sm mb-2">
+          <span id="category-spend-label" class="text-gray-700 font-medium"></span>
+        </div>
+        <div class="h-2 rounded-full bg-blush-100 overflow-hidden">
+          <div id="category-progress-bar" class="h-full bg-gold-500 rounded-full" style="width: 0%"></div>
+        </div>
+      </div>
+
+      <p id="error-message" class="hidden text-sm text-red-600 bg-red-50 border border-red-200 rounded-md px-3 py-2 mb-4"></p>
+
+      <input id="item-search" type="text" placeholder="Search items, assignee, or status..."
+        class="w-full sm:w-72 border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gold-400 mb-3" />
+
+      <p id="items-loading" class="hidden text-sm text-gray-400 px-1 mb-2">Loading items…</p>
+
+      <div id="items-container">
+        <div id="items-table-wrapper" class="hidden sm:block bg-white border border-blush-200 rounded-xl mb-6 hover:shadow-sm transition-shadow">
+          <table class="w-full text-sm table-fixed">
+            <thead class="bg-blush-100 text-gray-600 text-left">
+              <tr>
+                <th class="px-4 py-2 w-1/4">Item</th>
+                <th class="px-2 py-2 w-28">Actual</th>
+                <th class="px-2 py-2 w-28">Paid</th>
+                <th class="px-4 py-2 w-1/6">Status</th>
+                <th class="px-4 py-2 w-24">Assignee</th>
+                <th class="px-4 py-2">Remark</th>
+                <th class="px-4 py-2 w-16"></th>
+              </tr>
+            </thead>
+            <tbody id="items-body"></tbody>
+          </table>
+        </div>
+
+        <div id="items-cards" class="sm:hidden space-y-3 mb-6"></div>
+      </div>
+
+      <p id="items-empty" class="hidden text-sm text-gray-400 text-center py-8 bg-white border border-blush-200 rounded-xl mb-6">
+        No items yet — add your first budget item below.
+      </p>
+
+      <!-- Add item form -->
+      <form id="add-item-form" class="bg-white border border-blush-200 rounded-xl p-4 grid grid-cols-2 sm:grid-cols-4 gap-3">
+        <input id="new-name" placeholder="Item name" required class="col-span-2 sm:col-span-4 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gold-400" />
+        <input id="new-budget" type="number" step="0.01" placeholder="Budget (RM)" class="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gold-400" />
+        <input id="new-actual" type="number" step="0.01" placeholder="Actual (RM)" class="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gold-400" />
+        <input id="new-paid" type="number" step="0.01" placeholder="Paid (RM)" class="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gold-400" />
+        <input id="new-assignee" placeholder="Assignee" class="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gold-400" />
+        <input id="new-remark" placeholder="Remark" class="col-span-2 sm:col-span-4 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gold-400" />
+        <button type="submit" class="col-span-2 sm:col-span-4 bg-gold-500 hover:bg-gold-600 text-white font-semibold px-4 py-2 rounded-md transition">Add Item</button>
+      </form>
+    </main>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const categoryId = params.get('id');
+    const STATUSES = ['Not Started', 'In Progress', 'Done'];
+    const errorMessage = document.getElementById('error-message');
+    let currentItems = [];
+
+    const sidebar = document.getElementById('sidebar');
+    const sidebarToggle = document.getElementById('sidebar-toggle');
+    const sidebarBackdrop = document.getElementById('sidebar-backdrop');
+
+    function isDesktop() {
+      return window.matchMedia('(min-width: 640px)').matches;
+    }
+
+    function setSidebarOpen(open) {
+      if (isDesktop()) {
+        sidebar.classList.remove('-translate-x-full', 'translate-x-0', 'w-64', 'w-0');
+        sidebar.classList.add(open ? 'w-64' : 'w-0');
+        sidebar.style.overflow = open ? 'auto' : 'hidden';
+        sidebarBackdrop.classList.add('hidden');
+      } else {
+        sidebar.classList.remove('w-0');
+        sidebar.classList.add('w-64');
+        sidebar.style.overflow = 'auto';
+        sidebar.classList.toggle('-translate-x-full', !open);
+        sidebar.classList.toggle('translate-x-0', open);
+        sidebarBackdrop.classList.toggle('hidden', !open);
+      }
+    }
+
+    let sidebarOpen = isDesktop();
+    setSidebarOpen(sidebarOpen);
+    window.addEventListener('resize', () => setSidebarOpen(sidebarOpen));
+
+    sidebarToggle.addEventListener('click', () => {
+      sidebarOpen = !sidebarOpen;
+      setSidebarOpen(sidebarOpen);
+    });
+    sidebarBackdrop.addEventListener('click', () => {
+      sidebarOpen = false;
+      setSidebarOpen(sidebarOpen);
+    });
+
+    async function loadSidebar() {
+      const categories = await apiFetch('/api/categories');
+      if (!categories) return;
+      const nav = document.getElementById('sidebar-categories');
+      nav.innerHTML = '';
+      categories.forEach((cat) => {
+        const a = document.createElement('a');
+        a.href = `/category/?id=${cat.id}`;
+        const isActive = String(cat.id) === String(categoryId);
+        a.className = isActive
+          ? 'block px-3 py-2 rounded-md text-sm font-semibold bg-blush-100 text-gray-900 transition'
+          : 'block px-3 py-2 rounded-md text-sm font-medium text-gray-600 hover:bg-blush-100 hover:text-gray-900 transition';
+        a.textContent = cat.name;
+        nav.appendChild(a);
+      });
+    }
+
+    loadSidebar();
+
+    document.getElementById('category-name-input').addEventListener('change', async (e) => {
+      try {
+        await apiFetch(`/api/categories/${categoryId}`, {
+          method: 'PUT',
+          body: JSON.stringify({ name: e.target.value }),
+        });
+        const saved = document.getElementById('rename-saved');
+        saved.classList.remove('hidden');
+        setTimeout(() => saved.classList.add('hidden'), 2000);
+        loadSidebar();
+      } catch (err) {
+        showError(err.message);
+      }
+    });
+
+    function showError(message) {
+      errorMessage.textContent = message;
+      errorMessage.classList.remove('hidden');
+    }
+
+    function statusBadgeClass(status) {
+      if (status === 'Done') return 'bg-green-100 text-green-700';
+      if (status === 'In Progress') return 'bg-gold-400/20 text-gold-600';
+      return 'bg-gray-100 text-gray-500';
+    }
+
+    async function loadCategory() {
+      if (!categoryId) {
+        showError('No category selected.');
+        return;
+      }
+
+      setLoading('items-loading', true);
+      let category;
+      try {
+        category = await apiFetch(`/api/categories/${categoryId}`);
+      } catch (e) {
+        setLoading('items-loading', false);
+        return showError(e.message);
+      }
+      setLoading('items-loading', false);
+      if (!category) return;
+
+      document.getElementById('category-name-input').value = category.name;
+
+      const totals = category.items.reduce(
+        (acc, i) => ({
+          budget: acc.budget + Number(i.budget_amount),
+          paid: acc.paid + Number(i.paid_amount),
+          pending: acc.pending + Number(i.pending_amount),
+        }),
+        { budget: 0, paid: 0, pending: 0 }
+      );
+      const percent = totals.budget > 0 ? Math.min(100, (totals.paid / totals.budget) * 100) : 0;
+      document.getElementById('category-spend-label').textContent =
+        `${formatRM(totals.paid)} / ${formatRM(totals.budget)}`;
+      document.getElementById('category-progress-bar').style.width = `${percent}%`;
+
+      currentItems = category.items;
+      filterItems();
+    }
+
+    function esc(v) {
+      return String(v == null ? '' : v).replace(/"/g, '&quot;');
+    }
+
+    function itemRowHtml(item) {
+      return `
+        <tr class="border-t border-blush-100">
+          <td class="px-4 py-2">
+            <input data-id="${item.id}" data-field="name" value="${esc(item.name)}" class="field-input w-full font-medium text-gray-900 border border-transparent hover:border-gray-200 focus:border-gold-400 rounded-md px-2 py-1 focus:outline-none" />
+          </td>
+          <td class="px-2 py-2">
+            <div class="relative">
+              <span class="absolute left-1.5 top-1/2 -translate-y-1/2 text-gray-400 text-xs pointer-events-none">RM</span>
+              <input data-id="${item.id}" data-field="actualAmount" type="number" step="0.01" value="${Number(item.actual_amount)}" class="field-input no-spinner w-full border border-transparent hover:border-gray-200 focus:border-gold-400 rounded-md pl-7 pr-1 py-1 focus:outline-none" />
+            </div>
+          </td>
+          <td class="px-2 py-2">
+            <div class="relative">
+              <span class="absolute left-1.5 top-1/2 -translate-y-1/2 text-gray-400 text-xs pointer-events-none">RM</span>
+              <input data-id="${item.id}" data-field="paidAmount" type="number" step="0.01" value="${Number(item.paid_amount)}" class="field-input no-spinner w-full border border-transparent hover:border-gray-200 focus:border-gold-400 rounded-md pl-7 pr-1 py-1 focus:outline-none" />
+            </div>
+          </td>
+          <td class="px-4 py-2">
+            <select data-id="${item.id}" class="status-select text-xs rounded-md px-2 py-1 ${statusBadgeClass(item.status)}">
+              ${STATUSES.map((s) => `<option value="${s}" ${s === item.status ? 'selected' : ''}>${s}</option>`).join('')}
+            </select>
+          </td>
+          <td class="px-4 py-2">
+            <input data-id="${item.id}" data-field="assignee" value="${esc(item.assignee)}" class="field-input w-full text-gray-700 border border-transparent hover:border-gray-200 focus:border-gold-400 rounded-md px-2 py-1 focus:outline-none" placeholder="—" />
+          </td>
+          <td class="px-4 py-2">
+            <input data-id="${item.id}" class="remark-input w-full text-xs border border-gray-200 rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-gold-400" value="${esc(item.remark)}" placeholder="Add a note..." />
+          </td>
+          <td class="px-4 py-2 text-right">
+            <button data-id="${item.id}" class="delete-btn text-red-500 hover:text-red-700 text-xs font-semibold">Delete</button>
+          </td>
+        </tr>
+      `;
+    }
+
+    function itemCardHtml(item) {
+      return `
+        <div class="bg-white border border-blush-200 rounded-xl p-4 hover:shadow-sm transition-shadow space-y-2">
+          <input data-id="${item.id}" data-field="name" value="${esc(item.name)}" class="field-input w-full font-medium text-gray-900 border border-transparent hover:border-gray-200 focus:border-gold-400 rounded-md px-2 py-1 focus:outline-none" />
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <span class="block text-xs text-gray-400 mb-1">Actual</span>
+              <div class="relative">
+                <span class="absolute left-1.5 top-1/2 -translate-y-1/2 text-gray-400 text-xs pointer-events-none">RM</span>
+                <input data-id="${item.id}" data-field="actualAmount" type="number" step="0.01" value="${Number(item.actual_amount)}" class="field-input no-spinner w-full border border-gray-200 focus:border-gold-400 rounded-md pl-7 pr-1 py-1 focus:outline-none" />
+              </div>
+            </div>
+            <div>
+              <span class="block text-xs text-gray-400 mb-1">Paid</span>
+              <div class="relative">
+                <span class="absolute left-1.5 top-1/2 -translate-y-1/2 text-gray-400 text-xs pointer-events-none">RM</span>
+                <input data-id="${item.id}" data-field="paidAmount" type="number" step="0.01" value="${Number(item.paid_amount)}" class="field-input no-spinner w-full border border-gray-200 focus:border-gold-400 rounded-md pl-7 pr-1 py-1 focus:outline-none" />
+              </div>
+            </div>
+          </div>
+          <div>
+            <span class="block text-xs text-gray-400 mb-1">Status</span>
+            <select data-id="${item.id}" class="status-select text-xs rounded-md px-2 py-1 ${statusBadgeClass(item.status)}">
+              ${STATUSES.map((s) => `<option value="${s}" ${s === item.status ? 'selected' : ''}>${s}</option>`).join('')}
+            </select>
+          </div>
+          <div>
+            <span class="block text-xs text-gray-400 mb-1">Assignee</span>
+            <input data-id="${item.id}" data-field="assignee" value="${esc(item.assignee)}" class="field-input w-full text-gray-700 border border-gray-200 focus:border-gold-400 rounded-md px-2 py-1 focus:outline-none" placeholder="—" />
+          </div>
+          <div>
+            <span class="block text-xs text-gray-400 mb-1">Remark</span>
+            <input data-id="${item.id}" class="remark-input w-full text-xs border border-gray-200 rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-gold-400" value="${esc(item.remark)}" placeholder="Add a note..." />
+          </div>
+          <div class="text-right">
+            <button data-id="${item.id}" class="delete-btn text-red-500 hover:text-red-700 text-xs font-semibold">Delete</button>
+          </div>
+        </div>
+      `;
+    }
+
+    function toggleItemsEmpty(isEmpty, query) {
+      const empty = document.getElementById('items-empty');
+      const container = document.getElementById('items-container');
+      container.classList.toggle('hidden', isEmpty);
+      empty.classList.toggle('hidden', !isEmpty);
+      empty.textContent = query
+        ? `No items match "${query}".`
+        : 'No items yet — add your first budget item below.';
+    }
+
+    function renderItemsTable(items) {
+      const tbody = document.getElementById('items-body');
+      const cards = document.getElementById('items-cards');
+      tbody.innerHTML = items.map(itemRowHtml).join('');
+      cards.innerHTML = items.map(itemCardHtml).join('');
+
+      const query = document.getElementById('item-search').value.trim();
+      toggleItemsEmpty(items.length === 0, query);
+
+      const container = document.getElementById('items-container');
+
+      container.querySelectorAll('.status-select').forEach((select) => {
+        select.addEventListener('change', async (e) => {
+          try {
+            await apiFetch(`/api/budget-items/${e.target.dataset.id}`, {
+              method: 'PUT',
+              body: JSON.stringify({ status: e.target.value }),
+            });
+            loadCategory();
+          } catch (err) {
+            showError(err.message);
+          }
+        });
+      });
+
+      container.querySelectorAll('.field-input').forEach((input) => {
+        input.addEventListener('change', async (e) => {
+          try {
+            await apiFetch(`/api/budget-items/${e.target.dataset.id}`, {
+              method: 'PUT',
+              body: JSON.stringify({ [e.target.dataset.field]: e.target.value }),
+            });
+            loadCategory();
+          } catch (err) {
+            showError(err.message);
+          }
+        });
+      });
+
+      container.querySelectorAll('.remark-input').forEach((input) => {
+        input.addEventListener('change', async (e) => {
+          try {
+            await apiFetch(`/api/budget-items/${e.target.dataset.id}`, {
+              method: 'PUT',
+              body: JSON.stringify({ remark: e.target.value }),
+            });
+          } catch (err) {
+            showError(err.message);
+          }
+        });
+      });
+
+      container.querySelectorAll('.delete-btn').forEach((btn) => {
+        btn.addEventListener('click', async (e) => {
+          try {
+            await apiFetch(`/api/budget-items/${e.target.dataset.id}`, { method: 'DELETE' });
+            loadCategory();
+          } catch (err) {
+            showError(err.message);
+          }
+        });
+      });
+    }
+
+    function filterItems() {
+      const q = document.getElementById('item-search').value.trim().toLowerCase();
+      const filtered = !q
+        ? currentItems
+        : currentItems.filter((i) =>
+            (i.name || '').toLowerCase().includes(q) ||
+            (i.assignee || '').toLowerCase().includes(q) ||
+            (i.status || '').toLowerCase().includes(q)
+          );
+      renderItemsTable(filtered);
+    }
+
+    document.getElementById('item-search').addEventListener('input', filterItems);
+
+    document.getElementById('add-item-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const body = {
+        categoryId,
+        name: document.getElementById('new-name').value,
+        budgetAmount: document.getElementById('new-budget').value || 0,
+        actualAmount: document.getElementById('new-actual').value || 0,
+        paidAmount: document.getElementById('new-paid').value || 0,
+        assignee: document.getElementById('new-assignee').value,
+        remark: document.getElementById('new-remark').value,
+      };
+
+      try {
+        await apiFetch('/api/budget-items', { method: 'POST', body: JSON.stringify(body) });
+        e.target.reset();
+        loadCategory();
+      } catch (err) {
+        showError(err.message);
+      }
+    });
+
+    loadCategory();
+    initMusicToggle('music-toggle', 'bg-music');
+  </script>
+
+</body>
+</html>

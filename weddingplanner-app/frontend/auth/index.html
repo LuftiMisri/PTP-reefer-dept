@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ever After — Log In or Sign Up</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Playfair Display', 'serif'],
+            sans: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            blush: { 50: '#fdf2f4', 100: '#fbe6ea', 200: '#f6c9d3', 300: '#efa3b3' },
+            gold: { 400: '#d9a857', 500: '#c8943f', 600: '#a87530' },
+          },
+        },
+      },
+    };
+  </script>
+</head>
+<body class="font-sans bg-blush-50 text-gray-800 min-h-screen flex flex-col">
+
+  <header class="border-b border-blush-200 bg-white/80 backdrop-blur">
+    <nav class="max-w-6xl mx-auto flex items-center justify-between px-4 sm:px-6 py-3">
+      <a href="/" class="flex items-center gap-2">
+        <span class="text-2xl">💍</span>
+        <span class="font-display text-xl font-700 text-gray-900">Ever After</span>
+      </a>
+    </nav>
+  </header>
+
+  <main class="flex-1 flex items-center justify-center px-4 py-12">
+    <div class="w-full max-w-sm bg-white border border-blush-200 rounded-xl shadow-sm p-6 sm:p-8">
+
+      <div class="flex bg-blush-100 rounded-lg p-1 mb-6">
+        <button id="tab-login" class="flex-1 py-2 rounded-md text-sm font-semibold bg-white shadow text-gray-900">Log In</button>
+        <button id="tab-signup" class="flex-1 py-2 rounded-md text-sm font-medium text-gray-500 hover:text-gray-800">Sign Up</button>
+      </div>
+
+      <p id="error-message" class="hidden text-sm text-red-600 bg-red-50 border border-red-200 rounded-md px-3 py-2 mb-4"></p>
+
+      <!-- Login form -->
+      <form id="login-form" class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1" for="login-email">Email</label>
+          <input id="login-email" type="email" required class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gold-400" />
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1" for="login-password">Password</label>
+          <input id="login-password" type="password" required class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gold-400" />
+        </div>
+        <button type="submit" class="w-full bg-gold-500 hover:bg-gold-600 text-white font-semibold px-4 py-2 rounded-md transition">Log In</button>
+      </form>
+
+      <!-- Signup form -->
+      <form id="signup-form" class="space-y-4 hidden">
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1" for="signup-partner1">Your Name</label>
+            <input id="signup-partner1" type="text" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gold-400" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1" for="signup-partner2">Partner's Name</label>
+            <input id="signup-partner2" type="text" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gold-400" />
+          </div>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1" for="signup-date">Wedding Date</label>
+          <input id="signup-date" type="date" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gold-400" />
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1" for="signup-email">Email</label>
+          <input id="signup-email" type="email" required class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gold-400" />
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1" for="signup-password">Password</label>
+          <input id="signup-password" type="password" required minlength="8" class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gold-400" />
+        </div>
+        <button type="submit" class="w-full bg-gold-500 hover:bg-gold-600 text-white font-semibold px-4 py-2 rounded-md transition">Create Account</button>
+      </form>
+
+    </div>
+  </main>
+
+  <script>
+    const tabLogin = document.getElementById('tab-login');
+    const tabSignup = document.getElementById('tab-signup');
+    const loginForm = document.getElementById('login-form');
+    const signupForm = document.getElementById('signup-form');
+    const errorMessage = document.getElementById('error-message');
+
+    function showTab(tab) {
+      errorMessage.classList.add('hidden');
+      const isLogin = tab === 'login';
+      loginForm.classList.toggle('hidden', !isLogin);
+      signupForm.classList.toggle('hidden', isLogin);
+      tabLogin.classList.toggle('bg-white', isLogin);
+      tabLogin.classList.toggle('shadow', isLogin);
+      tabLogin.classList.toggle('text-gray-900', isLogin);
+      tabLogin.classList.toggle('font-semibold', isLogin);
+      tabLogin.classList.toggle('text-gray-500', !isLogin);
+      tabSignup.classList.toggle('bg-white', !isLogin);
+      tabSignup.classList.toggle('shadow', !isLogin);
+      tabSignup.classList.toggle('text-gray-900', !isLogin);
+      tabSignup.classList.toggle('font-semibold', !isLogin);
+      tabSignup.classList.toggle('text-gray-500', isLogin);
+    }
+
+    tabLogin.addEventListener('click', () => showTab('login'));
+    tabSignup.addEventListener('click', () => showTab('signup'));
+
+    function showError(message) {
+      errorMessage.textContent = message;
+      errorMessage.classList.remove('hidden');
+    }
+
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('login-email').value;
+      const password = document.getElementById('login-password').value;
+
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await res.json();
+      if (!res.ok) return showError(data.error || 'Could not log in.');
+      window.location.href = '/dashboard';
+    });
+
+    signupForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const body = {
+        email: document.getElementById('signup-email').value,
+        password: document.getElementById('signup-password').value,
+        partnerName1: document.getElementById('signup-partner1').value,
+        partnerName2: document.getElementById('signup-partner2').value,
+        weddingDate: document.getElementById('signup-date').value,
+      };
+
+      const res = await fetch('/api/auth/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+      const data = await res.json();
+      if (!res.ok) return showError(data.error || 'Could not sign up.');
+      window.location.href = '/dashboard';
+    });
+  </script>
+
+</body>
+</html>
